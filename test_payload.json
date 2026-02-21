@@ -1,0 +1,13 @@
+{
+    "members": [
+        {"type": "self", "age": 30, "label": "Self"}
+    ],
+    "conditions": ["diabetes"],
+    "smoker": false,
+    "bmi": 24.5,
+    "sum_insured": 10,
+    "tenure": 1,
+    "pincode": "110001",
+    "gender": "male",
+    "num_children": 0
+}

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omegle Health - Health Insurance Cost Predictor</title>
+    <meta name="description"
+        content="Get accurate health insurance cost predictions powered by AI. Compare plans, add family members, and find the best coverage for your needs.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Animated background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Header with Avatar -->
+        <header class="app-header" id="appHeader">
+            <div class="avatar-container">
+                <div class="avatar-ring">
+                    <div class="avatar-img">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#212121" />
+                                    <stop offset="100%" style="stop-color:#90e0ef" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="50" cy="50" r="50" fill="url(#avatarGrad)" />
+                            <circle cx="50" cy="38" r="16" fill="#fff" />
+                            <ellipse cx="50" cy="75" rx="25" ry="18" fill="#fff" />
+                            <circle cx="44" cy="36" r="2.5" fill="#667eea" />
+                            <circle cx="56" cy="36" r="2.5" fill="#667eea" />
+                            <path d="M44 43 Q50 48 56 43" stroke="#667eea" stroke-width="2" fill="none"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                </div>
+                <span class="avatar-name">AI Assistant</span>
+            </div>
+            <div class="theme-switch-wrapper">
+                <button id="themeToggle" class="theme-toggle-btn" title="Toggle Dark/Light Mode">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="header-subtitle" id="headerSubtitle">Hi! I'm your AI Assistant, your AI insurance advisor. Let me
+                help you find the perfect plan!</p>
+        </header>
+
+        <!-- Promo Banner -->
+        <div class="promo-banner" id="promoBanner">
+            <div class="promo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                        fill="white" />
+                </svg>
+            </div>
+            <span>Get an instant AI-powered quote & <strong>save up to 35% today!</strong></span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-dot"></div>
+                    <span>Purpose</span>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-dot"></div>
+                    <span>Location</span>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-dot"></div>
+                    <span>Identity</span>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-dot"></div>
+                    <span>Contact</span>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-dot"></div>
+                    <span>Members</span>
+                </div>
+                <div class="progress-step" data-step="6">
+                    <div class="step-dot"></div>
+                    <span>Ages</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step Cards Container -->
+        <div class="steps-wrapper">
+            <!-- STEP 0: Landing Page -->
+            <div class="step-card active" id="step0">
+                <div class="hero-banner">
+                    <div class="hero-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80"
+                            alt="Family Care Hero" class="hero-main-img">
+                        <div class="hero-overlay"></div>
+                        <div class="hero-text-content">
+                            <div class="brand-tag">Premium Health Care</div>
+                            <h1 class="hero-title">Your Health, Our <span>Priority</span></h1>
+                            <p class="hero-subtitle">Experience the future of medical protection with AI-driven plans
+                                tailored just for you and your loved ones.</p>
+                            <button class="primary-btn hero-cta" id="startExploringBtn">
+                                Start Your Journey 🚀
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="visual-gallery">
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=500&q=80"
+                                alt="Expert Medical Counsel">
+                            <div class="gallery-label">Expert Care</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=500&q=80"
+                                alt="Friendly Doctor">
+                            <div class="gallery-label">Instant Meds</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&w=500&q=80"
+                                alt="Modern Hospital">
+                            <div class="gallery-label">Global Access</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=500&q=80"
+                                alt="Healthy Future">
+                            <div class="gallery-label">Family First</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?auto=format&fit=crop&w=500&q=80"
+                                alt="Customer Support">
+                            <div class="gallery-label">24/7 Support</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=500&q=80"
+                                alt="Insurance Claims">
+                            <div class="gallery-label">Painless Claims</div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Our Medical Services</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80"
+                                    alt="Health Checkup">
+                            </div>
+                            <h4>Primary Care</h4>
+                            <p>Regular check-ups and preventative screenings for all ages.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=400&q=80"
+                                    alt="Specialized Surgery">
+                            </div>
+                            <h4>Specialized Surgery</h4>
+                            <p>High-precision surgical procedures with expert surgeons.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80"
+                                    alt="Critical Care">
+                            </div>
+                            <h4>Critical Care</h4>
+                            <p>24/7 emergency support and ICU facilities with rapid response.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=400&q=80"
+                                    alt="Advanced Labs">
+                            </div>
+                            <h4>Advanced Diagnostics</h4>
+                            <p>World-class lab testing and imaging services for accurate results.</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-strip">
+                        <div class="trust-item">⭐ 4.9/5 Rating</div>
+                        <div class="trust-divider"></div>
+                        <div class="trust-item">🏥 10k+ Hospitals</div>
+                        <div class="trust-divider"></div>
+                        <div class="trust-item">🛡️ Instant Approval</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 1: Purpose -->
+            <div class="step-card" id="step1">
+                <div class="step-header">
+                    <button class="back-btn" id="backBtn1">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <span class="step-indicator">Step 1 of 6</span>
+                </div>
+                <div class="step-content">
+                    <div class="purpose-options">
+                        <button class="purpose-card" id="purposeBuy" data-purpose="buy">
+                            <div class="purpose-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M9 12l2 2 4-4" />
+                                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="purpose-text">
+                                <h3>Want to buy insurance</h3>
+                                <p>Get comprehensive coverage for your family</p>
+                            </div>
+                            <div class="purpose-arrow">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </button>
+                        <button class="purpose-card" id="purposeCheck" data-purpose="check">
+                            <div class="purpose-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="purpose-text">
+                                <h3>Here to check prices</h3>
+                                <p>Compare plans and find the best rates</p>
+                            </div>
+                            <div class="purpose-arrow">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: Location (PIN) -->
+            <div class="step-card" id="step2">
+                <div class="step-header">
+                    <button class="back-btn" id="backBtn2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <span class="step-indicator">Step 2 of 6</span>
+                </div>
+                <div class="step-content">
+                    <div class="form-group">
+                        <label class="form-label" for="pincode">PIN Code</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="pincode" class="form-input" placeholder="Enter your PIN code"
+                                maxlength="6" inputmode="numeric">
+                            <div class="input-status" id="pincodeStatus"></div>
+                        </div>
+                        <p class="location-display" id="locationDisplay"></p>
+                    </div>
+                </div>
+                <button class="primary-btn" id="step2Next">
+                    Next
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- STEP 3: Identity (Name & Email) -->
+            <div class="step-card" id="step3">
+                <div class="step-header">
+                    <button class="back-btn" id="backBtn3">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <span class="step-indicator">Step 3 of 6</span>
+                </div>
+                <div class="step-content">
+                    <div class="form-group">
+                        <label class="form-label" for="fullName">Full Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="fullName" class="form-input" placeholder="Enter your full name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="annualIncome">Annual Income</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="annualIncome" class="form-input"
+                                placeholder="Enter your annual income" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+                <button class="primary-btn" id="step3Next">
+                    Next
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- STEP 4: Contact & OTP (Merged) -->
+            <div class="step-card" id="step4">
+                <div class="step-header">
+                    <button class="back-btn" id="backBtn4">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <span class="step-indicator">Step 4 of 6</span>
+                </div>
+                <div class="step-content">
+                    <!-- Mobile Number Section -->
+                    <div id="mobileSection">
+                        <div class="form-group">
+                            <label class="form-label" for="mobile">Mobile Number</label>
+                            <div class="input-wrapper">
+                                <input type="tel" id="mobile" class="form-input" placeholder="Enter your mobile number"
+                                    maxlength="10" inputmode="numeric">
+                            </div>
+                            <p class="input-hint">Privacy assured, we need this to serve you.</p>
+                        </div>
+                    </div>
+
+                    <!-- OTP Section (Hidden Initially) -->
+                    <div id="otpSection" style="display:none;">
+                        <div class="otp-container">
+                            <h3 class="otp-title">Verify Device</h3>
+                            <p class="otp-subtitle">Enter the 4-digit code sent to <br><strong id="otpPhoneDisplay">+91
+                                    9123456789</strong></p>
+
+                            <div class="otp-inputs" id="otpInputs">
+                                <input type="text" maxlength="1" inputmode="numeric" class="otp-field">
+                                <input type="text" maxlength="1" inputmode="numeric" class="otp-field">
+                                <input type="text" maxlength="1" inputmode="numeric" class="otp-field">
+                                <input type="text" maxlength="1" inputmode="numeric" class="otp-field">
+                            </div>
+
+                            <div class="resend-container">
+                                <button class="resend-btn" id="resendOtp">Resend OTP in <span>25s</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <button class="primary-btn" id="step4Next">
+                    Verify Number
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </button>
+
+                <button class="primary-btn" id="verifyOtpBtn" style="display:none;">
+                    Confirm & Proceed
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- STEP 5: Family Members -->
+            <div class="step-card" id="step5">
+                <div class="step-header">
+                    <button class="back-btn" id="backBtn5">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <span class="step-indicator">Step 5 of 6</span>
+                </div>
+                <div class="step-content">
+                    <!-- Gender Toggle -->
+                    <div class="gender-toggle" id="genderToggle">
+                        <button class="gender-btn active" data-gender="male" id="genderMale">
+                            <div class="radio-circle">
+                                <div class="radio-inner"></div>
+                            </div>
+                            <span>I'm a Male</span>
+                        </button>
+                        <button class="gender-btn" data-gender="female" id="genderFemale">
+                            <div class="radio-circle">
+                                <div class="radio-inner"></div>
+                            </div>
+                            <span>I'm a Female</span>
+                        </button>
+                    </div>
+
+                    <!-- Members Grid -->
+                    <div class="members-grid" id="membersGrid">
+                        <div class="member-item">
+                            <div class="member-card" data-member="self" id="memberSelf">
+                                <span class="member-label">Self</span>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-card" data-member="wife" id="memberWife">
+                                <span class="member-label">Wife</span>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-card" data-member="son" id="memberSon">
+                                <span class="member-label">Son</span>
+                            </div>
+                            <div class="member-count" id="sonCount" style="display:none;">
+                                <button class="count-btn minus" id="sonMinus">−</button>
+                                <span class="count-value" id="sonValue">1</span>
+                                <button class="count-btn plus" id="sonPlus">+</button>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-card" data-member="daughter" id="memberDaughter">
+                                <span class="member-label">Daughter</span>
+                            </div>
+                            <div class="member-count" id="daughterCount" style="display:none;">
+                                <button class="count-btn minus" id="daughterMinus">−</button>
+                                <span class="count-value" id="daughterValue">1</span>
+                                <button class="count-btn plus" id="daughterPlus">+</button>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-card" data-member="father" id="memberFather">
+                                <span class="member-label">Father</span>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-card" data-member="mother" id="memberMother">
+                                <span class="member-label">Mother</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View More Members -->
+                    <div class="view-more-members" id="viewMoreMembers">
+                        <button class="view-more-btn" id="viewMoreBtn">
+                            View more members
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Extra Members (hidden initially) -->
+                    <div class="extra-members" id="extraMembers" style="display:none;">
+                        <div class="members-grid">
+                            <div class="member-item">
+                                <div class="member-card" data-member="fatherInLaw" id="memberFatherInLaw">
+                                    <span class="member-label">Father In Law</span>
+                                </div>
+                            </div>
+                            <div class="member-item">
+                                <div class="member-card" data-member="motherInLaw" id="memberMotherInLaw">
+                                    <span class="member-label">Mother In Law</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="primary-btn" id="step5Next">
+                    Next
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- STEP 6: Age Details -->
+            <div class="step-card" id="step6">
+                <div class="step-header">
+                    <button class="back-btn" id="backBtn6">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <span class="step-indicator">Step 6 of 6</span>
+                </div>
+                <div class="step-content">
+                    <div class="age-entries" id="ageEntries">
+                        <!-- Dynamically populated -->
+                    </div>
+                    <div class="add-member-divider">
+                        <span class="divider-line"></span>
+                    </div>
+                    <button class="add-member-btn" id="addMemberBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add another member
+                    </button>
+
+                    <!-- Health Conditions Section -->
+                    <div class="health-conditions">
+                        <h3 class="conditions-title">Pre-existing conditions</h3>
+                        <div class="conditions-grid" id="conditionsGrid">
+                            <label class="condition-chip" id="condDiabetes">
+                                <input type="checkbox" value="diabetes">
+                                <span class="chip-text">🩸 Diabetes</span>
+                            </label>
+                            <label class="condition-chip" id="condBP">
+                                <input type="checkbox" value="hypertension">
+                                <span class="chip-text">💗 Blood Pressure</span>
+                            </label>
+                            <label class="condition-chip" id="condThyroid">
+                                <input type="checkbox" value="thyroid">
+                                <span class="chip-text">🦋 Thyroid</span>
+                            </label>
+                            <label class="condition-chip" id="condAsthma">
+                                <input type="checkbox" value="asthma">
+                                <span class="chip-text">🫁 Asthma</span>
+                            </label>
+                            <label class="condition-chip" id="condHeart">
+                                <input type="checkbox" value="heart">
+                                <span class="chip-text">❤️ Heart Disease</span>
+                            </label>
+                            <label class="condition-chip" id="condNone">
+                                <input type="checkbox" value="none" id="condNoneInput">
+                                <span class="chip-text">✅ None</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Smoking & Lifestyle -->
+                    <div class="lifestyle-section">
+                        <h3 class="conditions-title">Lifestyle factors</h3>
+                        <div class="lifestyle-row">
+                            <div class="lifestyle-toggle">
+                                <span>Do you smoke?</span>
+                                <label class="switch" id="smokerSwitch">
+                                    <input type="checkbox" id="smokerInput">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="bmi-tool" id="bmiTool">
+                                <div class="bmi-cal-row">
+                                    <div class="cal-input-group">
+                                        <label>Height (cm)</label>
+                                        <input type="number" id="bmiHeight" placeholder="170" min="50" max="250">
+                                    </div>
+                                    <div class="cal-input-group">
+                                        <label>Weight (kg)</label>
+                                        <input type="number" id="bmiWeight" placeholder="70" min="10" max="300">
+                                    </div>
+                                    <div class="cal-result-group">
+                                        <label>Final BMI</label>
+                                        <div class="bmi-value-badge" id="bmiResult">24.2</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="bmiValue" value="24.2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="primary-btn view-plans-btn" id="viewPlansBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    View Plans
+                </button>
+            </div>
+
+            <!-- STEP 7: Results / Plans -->
+            <div class="step-card results-card" id="step7">
+                <!-- Success Banner -->
+                <div class="success-banner" id="successBanner">
+                    <div class="confetti-container" id="confettiContainer"></div>
+                    <div class="success-content">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        <span><strong>Success!</strong> Your personalized insurance quote is ready</span>
+                        <button class="banner-close" id="bannerClose">✕</button>
+                    </div>
+                </div>
+
+                <!-- Policy Info -->
+                <div class="policy-info" id="policyInfo">
+                    <span class="policy-for">Policy for</span>
+                    <span class="policy-members" id="policyMembers">Self</span>
+                    <button class="edit-btn" id="editPolicyBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Sum Insured & Tenure -->
+                <div class="plan-controls">
+                    <div class="sum-insured" id="sumInsuredSection">
+                        <div class="sum-value">
+                            <strong id="sumAmount">10</strong> <span>Lacs</span>
+                        </div>
+                        <span class="sum-label">Sum Insured</span>
+                        <button class="find-value-btn" id="findValueBtn">Find right value →</button>
+                    </div>
+                    <div class="tenure-selector">
+                        <span class="tenure-label">Policy Tenure</span>
+                        <div class="tenure-options" id="tenureOptions">
+                            <button class="tenure-btn active" data-tenure="1" id="tenure1">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                                </svg>
+                                1 yr
+                            </button>
+                            <button class="tenure-btn" data-tenure="2" id="tenure2">2 yrs</button>
+                            <button class="tenure-btn" data-tenure="3" id="tenure3">3 yrs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sum Insured Slider (hidden by default) -->
+                <div class="sum-slider-container" id="sumSliderContainer" style="display:none;">
+                    <input type="range" id="sumSlider" min="3" max="100" value="10" class="sum-slider">
+                    <div class="slider-labels">
+                        <span>₹3L</span>
+                        <span>₹25L</span>
+                        <span>₹50L</span>
+                        <span>₹1Cr</span>
+                    </div>
+                </div>
+
+                <!-- Plan Cards -->
+                <div class="plans-container" id="plansContainer">
+                    <!-- Dynamically populated -->
+                </div>
+
+                <!-- Feature Comparison -->
+                <div class="features-table" id="featuresTable">
+                    <!-- Dynamically populated -->
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="results-actions">
+                    <button class="primary-btn" id="downloadQuoteBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Download Quote
+                    </button>
+                    <button class="secondary-btn" id="startOverBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="1 4 1 10 7 10" />
+                            <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+                        </svg>
+                        Start Over
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Disclaimer -->
+        <div class="disclaimer" id="disclaimer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>By clicking "View Plans", I authorize Omegle Health to connect with me over Call, SMS, WhatsApp,
+                overriding DNCR.</span>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
